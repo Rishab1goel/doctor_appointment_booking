@@ -1,20 +1,13 @@
 import 'package:doctorappointmentbookingapp/colorScheme.dart';
 import 'package:flutter/material.dart';
-class DocInfoPage extends StatelessWidget {
+
+class DoctorInfoScreen extends StatefulWidget {
+  static const String title = 'doctorInfoScreen';
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: docInfoPage(),
-    );
-  }
-}
-class docInfoPage extends StatefulWidget {
-  @override
-  _docInfoPageState createState() => _docInfoPageState();
+  _DoctorInfoScreenState createState() => _DoctorInfoScreenState();
 }
 
-class _docInfoPageState extends State<docInfoPage> {
+class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,12 +121,12 @@ class _docInfoPageState extends State<docInfoPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text("&date",style: TextStyle(
+                  Text("$date",style: TextStyle(
                     color:dateColor,
                     fontSize: 30,
                     fontWeight: FontWeight.w800,
                   ),),
-                  Text("&month",style: TextStyle(color: dateColor,fontSize: 20,fontWeight: FontWeight.w800),),
+                  Text("$month",style: TextStyle(color: dateColor,fontSize: 20,fontWeight: FontWeight.w800),),
 
                 ],
               ),
@@ -142,8 +135,8 @@ class _docInfoPageState extends State<docInfoPage> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("&slotType",style: TextStyle(color: dateColor,fontSize: 20,fontWeight: FontWeight.w800),),
-                Text("&time",style: TextStyle(color: dateColor,fontSize: 17,fontWeight: FontWeight.w600),),
+                Text("$slotType",style: TextStyle(color: dateColor,fontSize: 20,fontWeight: FontWeight.w800),),
+                Text("$time",style: TextStyle(color: dateColor,fontSize: 17,fontWeight: FontWeight.w600),),
 
               ],
 
