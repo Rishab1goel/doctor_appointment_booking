@@ -100,11 +100,11 @@ class _MyFirstPageState extends State<MyFirstPage> {
                         ),
                       ),
                       Text("Chief Doctors",style: TextStyle(fontSize: 25,fontWeight: FontWeight.w800),),
+                      // ignore: file_names
                       SizedBox(height: 20,),
-                      Container(
-                        height: 400,
-                        child: SingleChildScrollView(
-                          physics: BouncingScrollPhysics(),
+                      SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
+                        child: Expanded(
                           child: Column(
                             children: [
                               createDocWidget("doc1.png","Susan Thomas"),
@@ -117,8 +117,8 @@ class _MyFirstPageState extends State<MyFirstPage> {
 
                             ],
                           ),
-
                         ),
+
                       ),
                     ],
                   ),
@@ -164,11 +164,11 @@ class _MyFirstPageState extends State<MyFirstPage> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Container(
-                  width: 70,
+                  width: 40,
                   height: 90,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/&imgName'),
+                      image: AssetImage('assets/$imgName'),
                       fit: BoxFit.cover,
                     ),
                   ),

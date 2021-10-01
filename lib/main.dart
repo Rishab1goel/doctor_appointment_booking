@@ -1,6 +1,6 @@
 import 'package:doctorappointmentbookingapp/colorScheme.dart';
 import 'package:flutter/material.dart';
-import 'HomePage.dart';
+import 'login.dart';
 
 void main(){
 
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: MyHomePage(),
       routes:{
-       '/home_page': (context)=>HomePage(),
+       '/login_page': (context)=>Login(),
       },
     );
   }
@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
   void openHomePage(){
- Navigator.pushNamed(context,'/home_page');
+ Navigator.pushNamed(context,'/login_page');
 
   }
 
@@ -132,7 +132,7 @@ class pathPainter extends CustomPainter{
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    // TODO: implement shouldRepaint
+
     return true;
   }
 
