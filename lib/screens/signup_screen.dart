@@ -1,25 +1,27 @@
+import 'package:doctorappointmentbookingapp/screens/home_screen.dart';
 import 'package:flutter/material.dart';
-import 'HomePage.dart';
 
-class Login extends StatelessWidget {
+// class Login extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: SignUpScreen(),
+//       routes: {
+//         '/home_page': (context) => HomePage(),
+//       },
+//     );
+//   }
+// }
+
+class SignUpScreen extends StatefulWidget {
+  static const String title = 'SignUpScreen';
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: LoginPage(),
-      routes: {
-        '/home_page': (context)=>HomePage(),
-      },
-    );
-  }
-  
-}
-class LoginPage extends StatefulWidget {
-  @override
-  _LoginPageState createState() => _LoginPageState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,13 +46,12 @@ class _LoginPageState extends State<LoginPage> {
                 Container(
                   padding: EdgeInsets.all(10),
                   child: TextField(
-                      decoration: InputDecoration(
+                    decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Doctor Name',
                     ),
                   ),
                 ),
-
                 Container(
                   padding: EdgeInsets.all(10),
                   child: TextField(
@@ -60,7 +61,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-
                 Container(
                   padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: TextField(
@@ -71,48 +71,35 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-
                 Container(
                     height: 50,
-                    padding: EdgeInsets.fromLTRB(10, 10,0, 0),
-                    child: RaisedButton(
-                      textColor: Colors.white,
-                      color: Colors.green,
+                    padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                    child: ElevatedButton(
+                      // textColor: Colors.white,
+                      // color: Colors.green,
                       child: Text('Register'),
                       onPressed: () {
-                        Navigator.push(
-
-                          context,MaterialPageRoute(builder: (context) =>HomePage()),
-                        );
-
-                        },
+                        Navigator.pushNamed(context, HomeScreen.title);
+                      },
                     )),
                 Container(
                     child: Row(
-                      children: <Widget>[
-                        Text('Already have an account?'),
-                        FlatButton(
-                          textColor: Colors.green,
-                          child: Text(
-                            'LOGIN',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-
-                              context,MaterialPageRoute(builder: (context) =>HomePage()),
-                            );
-
-                            //signup screen
-                          },
-                        )
-                      ],
-                      mainAxisAlignment: MainAxisAlignment.center,
-                    ))
+                  children: <Widget>[
+                    Text('Already have an account?'),
+                    ElevatedButton(
+                      child: Text(
+                        'LOGIN',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, HomeScreen.title);
+                        //signup screen
+                      },
+                    )
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ))
               ],
             )));
   }
 }
-
-
-

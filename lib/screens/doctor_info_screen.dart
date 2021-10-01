@@ -1,20 +1,13 @@
 import 'package:doctorappointmentbookingapp/colorScheme.dart';
 import 'package:flutter/material.dart';
-class DocInfoPage extends StatelessWidget {
+
+class DoctorInfoScreen extends StatefulWidget {
+  static const String title = 'doctorInfoScreen';
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: docInfoPage(),
-    );
-  }
-}
-class docInfoPage extends StatefulWidget {
-  @override
-  _docInfoPageState createState() => _docInfoPageState();
+  _DoctorInfoScreenState createState() => _DoctorInfoScreenState();
 }
 
-class _docInfoPageState extends State<docInfoPage> {
+class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
