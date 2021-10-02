@@ -1,6 +1,7 @@
 import 'package:doctorappointmentbookingapp/colorScheme.dart';
 import 'package:doctorappointmentbookingapp/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'signup_screen.dart';
 
 class GetStartedScreen extends StatefulWidget {
   static const String title = 'getStartedScreen';
@@ -59,31 +60,66 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
               Positioned(
                 bottom: 0,
                 right: 0,
-                child: InkWell(
-                  child: Container(
-                    height: 80,
-                    width: 200,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          stops: [0, 1],
-                          colors: [getStartedColorStart, getStartedColorEnd],
-                        ),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(25),
-                        )),
-                    child: Center(
-                      child: Text(
-                        "Get Started",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w800,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                 mainAxisSize: MainAxisSize.max,
+                  children: [
+                    InkWell(
+                      child: Container(
+                        height: 80,
+                        width: 100,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              stops: [0, 1],
+                              colors: [getStartedColorStart, getStartedColorEnd],
+                            ),
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(25),
+                            )),
+                        child: Center(
+                          child: Text(
+                            "Enter as patient",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
                         ),
                       ),
+                      onTap: () => Navigator.pushNamed(context, HomeScreen.title),
+
                     ),
-                  ),
-                  onTap: () => Navigator.pushNamed(context, HomeScreen.title),
+
+                    InkWell(
+                      child: Container(
+                        height: 80,
+                        width: 200,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              stops: [0, 1],
+                              colors: [getStartedColorStart, getStartedColorEnd],
+                            ),
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(25),
+                            )),
+                        child: Center(
+                          child: Text(
+                            "Enter as Doctor",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: () => Navigator.pushNamed(context, SignUpScreen.title),
+
+                    ),
+                  ],
                 ),
+
               )
             ],
           )

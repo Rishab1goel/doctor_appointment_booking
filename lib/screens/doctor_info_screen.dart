@@ -1,5 +1,6 @@
 import 'package:doctorappointmentbookingapp/colorScheme.dart';
 import 'package:flutter/material.dart';
+import 'get_started_screen.dart';
 
 class DoctorInfoScreen extends StatefulWidget {
   static const String title = 'doctorInfoScreen';
@@ -84,6 +85,19 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
                           timeSlotWidget("1","June","Consultation","Wednesday 9 am to 1.30 am"),
                           timeSlotWidget("3","June","Consultation","Friday 10 am to 1.30 am"),
 
+                          Center(
+                            child: ElevatedButton(
+                              child: Text(
+                                'SIGN OUT',
+                                style: TextStyle(fontSize: 18,),
+
+                              ),
+                              onPressed: () {
+                                Navigator.pushNamed(context, GetStartedScreen.title);
+                                //signup screen
+                              },
+                            ),
+                          )
                         ],
 
                        ),

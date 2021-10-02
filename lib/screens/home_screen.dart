@@ -27,32 +27,31 @@ class _HomeScreenState extends State<HomeScreen> {
             appBar : AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
-              leading: Icon(
-                Icons.menu,
-                color: Colors.black,
-                size: 30,
-              ),
+              leading: Image.asset('assets/icons/app_icon.png'),
               actions: [
                 Container(
-                  height: 75,
-                  width: 75,
+                  height: 115,
+                  width: 115,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: LinearGradient(
                         colors: [getStartedColorStart, getStartedColorEnd],
                         stops: [0, 1]),
                   ),
-                  child: Center(
-                    child: Text(
-                      'C',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w900,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, DoctorInfoScreen.title);
+                    },
+                    child: Container(
+                      child: Center(
+                        child: Image.asset('assets/doc1.png',fit: BoxFit.cover,),
+
                       ),
                     ),
                   ),
-                )
+
+                ),
+
               ],
             ),
             body: Padding(

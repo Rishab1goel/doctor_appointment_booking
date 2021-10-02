@@ -1,8 +1,10 @@
 import 'package:doctorappointmentbookingapp/screens/doctor_info_screen.dart';
 import 'package:doctorappointmentbookingapp/screens/get_started_screen.dart';
 import 'package:doctorappointmentbookingapp/screens/home_screen.dart';
+import 'package:doctorappointmentbookingapp/screens/signup_screen.dart';
 import 'package:doctorappointmentbookingapp/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
+
 
 void main(){
   runApp(MyApp());
@@ -17,8 +19,10 @@ class MyApp extends StatelessWidget {
       routes:{
         SplashScreen.title: (context)=> SplashScreen(),
         GetStartedScreen.title : (context) => GetStartedScreen(),
+        SignUpScreen.title: (context) => SignUpScreen(),
         HomeScreen.title: (context)=>HomeScreen(),
         DoctorInfoScreen.title: (context) => DoctorInfoScreen(),
+
       },
     );
   }

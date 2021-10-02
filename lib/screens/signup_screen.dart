@@ -89,7 +89,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ElevatedButton(
                       child: Text(
                         'LOGIN',
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(fontSize: 18),
                       ),
                       onPressed: () {
                         Navigator.pushNamed(context, HomeScreen.title);
