@@ -10,15 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-class HomeScreen extends StatefulWidget {
-  static const String title = 'HomeScreen';
+class HomeScreenPatient extends StatefulWidget {
+  static const String title = 'homeScreenPatient';
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeScreenPatientState createState() => _HomeScreenPatientState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenPatientState extends State<HomeScreenPatient> {
   FirebaseAuth _auth = FirebaseAuth.instance;
-  var _databaseReference = FirebaseDatabase.instance.reference().child('doctors');
   bool _isConnected = false;
 
   @override
@@ -66,22 +65,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              actions: [
-                if(_auth.currentUser!=null)
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushNamed(context, DoctorProfileScreen.title);
-                    },
-                    child: Center(
-                      child: Image.asset(
-                        'assets/doc1.png',
-                        fit: BoxFit.fill,
-                      ),
-
-                    ),
-                  ),
-
-              ],
             ),
             body: Padding(
               padding: EdgeInsets.only(left: 20, right: 10, top: 25),
@@ -89,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "Available Doctors",
+                    "Categories",
                     style: TextStyle(
                         fontSize: 30, fontWeight: FontWeight.w700),
                   ),
@@ -121,58 +104,63 @@ class _HomeScreenState extends State<HomeScreen> {
                   //   },
                   //   child: Text('Read'),
                   // ),
-
-                  Text(
-                    "All Doctors",
-                    style: TextStyle(
-                        fontSize: 25, fontWeight: FontWeight.w800),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
                   Expanded(
-                    child: RefreshIndicator(
-                        onRefresh: ()async{
-                          await refresh();
-                        },
-                        child: 
-                        _isConnected ?
-                          StreamBuilder<List<Doctor>?>(
-                            stream: DoctorService.fetchDoctors(),
-                            builder: (context, snapshot) {
-                              List<Doctor>? allDoctors =  snapshot.data;
-                              return snapshot.hasError 
-                              ? Center(child: Text('Something went wrong'),)
-                              : snapshot.hasData 
-                                ? ListView.builder(
-                                    itemCount: allDoctors!.length,
-                                    itemBuilder: (context,index){
-                                      return createDoctorWidget(
-                                        imgName: "doc${(index)%3 +1}.png",
-                                        doctor: allDoctors[index],                                
-                                      );
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "All Doctors",
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.w800),
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Expanded(
+                            child: RefreshIndicator(
+                                onRefresh: ()async{
+                                  await refresh();
+                                },
+                                child: 
+                                _isConnected ?
+                                  StreamBuilder<List<Doctor>?>(
+                                    stream: DoctorService.fetchDoctors(),
+                                    builder: (context, snapshot) {
+                                      List<Doctor>? allDoctors =  snapshot.data;
+                                      return snapshot.hasError 
+                                      ? Center(child: Text('Something went wrong'),)
+                                      : snapshot.hasData 
+                                        ? ListView.builder(
+                                            itemCount: allDoctors!.length,
+                                            itemBuilder: (context,index){
+                                              return createDoctorWidget(
+                                                imgName: "doc${(index)%3 +1}.png",
+                                                doctor: allDoctors[index],                                
+                                              );
+                                            }
+                                          )
+                                        : Center(child: CircularProgressIndicator() );
                                     }
                                   )
-                                : Center(child: CircularProgressIndicator() );
-                            }
-                          )
-                          : Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text('No network'),
-                                ElevatedButton(onPressed: ()async{refresh();}, 
-                                  child: Text('Refresh'))
-                              ],
+                                  : Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text('No network'),
+                                        ElevatedButton(onPressed: ()async{refresh();}, 
+                                          child: Text('Refresh'))
+                                      ],
+                                    ),
+                                  ),
+                              )
                             ),
-                          ),
-                      )
-                    )                      
+                      ],
+                    ),
+                  )                      
                 ],
               ),
             ),
           ),
-          
         ],
     );
   }
@@ -259,6 +247,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  
 
 }
 

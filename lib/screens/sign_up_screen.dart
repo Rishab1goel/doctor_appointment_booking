@@ -26,10 +26,12 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _specializationController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
+
   bool _isConnected = false;
   bool _passwordVisible = false;
   FirebaseAuth _auth = FirebaseAuth.instance;
@@ -129,7 +131,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 controller: _nameController,
                 hintText: 'Enter name',
                 validator: Validator.validateName,
-                keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(
                 height: 12,
@@ -144,9 +145,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 height: 12,
               ),
               inputField(
+                controller: _phoneController,
+                hintText: 'Enter phone number',
+                validator: Validator.validatePhone
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              inputField(
                 controller: _specializationController,
                 hintText: 'Field of specialisation',
-                keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(
                 height: 12,
@@ -194,12 +202,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       if (res != null) {
                         final user = _auth.currentUser!;
                         user.updateDisplayName(_nameController.text); // adding name
-                        
+
                         Doctor doctorInfo = Doctor(
                           uid : user.uid,
                           name: _nameController.text, 
                           email: _emailController.text,
                           specialization: _specializationController.text,
+                          phone: _phoneController.text,
                         );
                         
                         await FirebaseRealtimeDataService.write(

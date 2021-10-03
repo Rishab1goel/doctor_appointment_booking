@@ -1,6 +1,5 @@
 import 'package:doctorappointmentbookingapp/colorScheme.dart';
 import 'package:doctorappointmentbookingapp/models/doctor.dart';
-import 'package:doctorappointmentbookingapp/screens/get_started_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -95,10 +94,19 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           SizedBox(height: 20,),
-                          Text("About the doctor",style: TextStyle(fontSize: 20,fontWeight:FontWeight.w800),),
+                          Text("Contact Information",style: TextStyle(fontSize: 20,fontWeight:FontWeight.w800),),
                           SizedBox(height: 10,),
-                          Text("${widget.doctor.description}",
-                          style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400),),
+                          Text(
+                            "Email : ${widget.doctor.email}",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w400),
+                          ),
+                          SizedBox(height: 6,),
+                          Text(
+                            "Phone : ${widget.doctor.phone}",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w400),
+                          ),
                           SizedBox(height: 24,),
                           Text("Available time slots",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800),),
                           SizedBox(height: 5,),

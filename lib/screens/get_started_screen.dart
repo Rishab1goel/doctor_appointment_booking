@@ -1,5 +1,6 @@
 import 'package:doctorappointmentbookingapp/colorScheme.dart';
-import 'package:doctorappointmentbookingapp/screens/home_screen.dart';
+import 'package:doctorappointmentbookingapp/screens/home_screen_doctor.dart';
+import 'package:doctorappointmentbookingapp/screens/home_screen_patient.dart';
 import 'package:doctorappointmentbookingapp/screens/sign_up_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -85,7 +86,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                         await Navigator.pushNamed(context, SignUpScreen.title);
                         if(_auth.currentUser!=null)
                         {
-                          Navigator.pushReplacementNamed(context, HomeScreen.title);
+                          Navigator.pushReplacementNamed(context, HomeScreenDoctor.title);
                         }
                         
                       }
@@ -115,7 +116,7 @@ class _GetStartedScreenState extends State<GetStartedScreen> {
                           ),
                         ),
                       ),
-                      onTap: () => Navigator.pushNamed(context, HomeScreen.title),
+                      onTap: () => Navigator.pushNamed(context, HomeScreenPatient.title),
                     ),
                     SizedBox(height: 50,)
                   ],

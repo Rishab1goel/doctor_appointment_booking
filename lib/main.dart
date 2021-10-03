@@ -1,7 +1,7 @@
-import 'package:doctorappointmentbookingapp/screens/doctor_info_screen.dart';
 import 'package:doctorappointmentbookingapp/screens/get_started_screen.dart';
-import 'package:doctorappointmentbookingapp/screens/home_screen.dart';
 import 'package:doctorappointmentbookingapp/screens/doctor_profile_screen.dart';
+import 'package:doctorappointmentbookingapp/screens/home_screen_doctor.dart';
+import 'package:doctorappointmentbookingapp/screens/home_screen_patient.dart';
 import 'package:doctorappointmentbookingapp/screens/sign_in_screen.dart';
 import 'package:doctorappointmentbookingapp/screens/sign_up_screen.dart';
 import 'package:doctorappointmentbookingapp/screens/splash_screen.dart';
@@ -24,7 +24,8 @@ class MyApp extends StatelessWidget {
       routes:{
         SplashScreen.title: (context)=> SplashScreen(),
         GetStartedScreen.title : (context) => GetStartedScreen(),
-        HomeScreen.title: (context)=>HomeScreen(),
+        HomeScreenDoctor.title: (context) => HomeScreenDoctor(),
+        HomeScreenPatient.title: (context)=>HomeScreenPatient(),
         SignUpScreen.title: (context) => SignUpScreen(),
         SignInScreen.title: (context) => SignInScreen(),
         DoctorProfileScreen.title: (context) => DoctorProfileScreen(),

@@ -1,7 +1,7 @@
 /// Splash screen is the intro screen which lasts for 3 seconds on app startup
 
 import 'dart:async';
-import 'package:doctorappointmentbookingapp/screens/home_screen.dart';
+import 'package:doctorappointmentbookingapp/screens/home_screen_doctor.dart';
 import 'package:flutter/material.dart';
 import 'package:doctorappointmentbookingapp/screens/get_started_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
   onDoneLoading() async {
     _auth.currentUser==null
     ? Navigator.pushReplacementNamed(context, GetStartedScreen.title)
-    : Navigator.pushReplacementNamed(context, HomeScreen.title);
+    : Navigator.pushReplacementNamed(context, HomeScreenDoctor.title);
   }
 
   @override

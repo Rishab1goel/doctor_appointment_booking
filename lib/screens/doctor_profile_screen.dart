@@ -67,15 +67,16 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  "${DoctorService.currentDoctor!.name}",
+                                  "Dr. ${DoctorService.currentDoctor!.name}",
                                   style: TextStyle(
-                                      fontSize: 20,
+                                      fontSize: 24,
                                       fontWeight: FontWeight.bold),
                                 ),
+                                SizedBox(height: 6,),
                                 Text(
-                                  "${DoctorService.currentDoctor!.specialization}",
+                                  "Specialization : ${DoctorService.currentDoctor!.specialization}",
                                   style: TextStyle(
-                                      fontSize: 17,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.w400),
                                 ),
                               ],
@@ -88,44 +89,28 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(
-                              "About the doctor",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w800),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "Please write about the description of the doctor here.This will be a detailed information about the doctor and the roles and achievements that the doctor has had over the past years",
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w400),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              "Available time slots",
-                              style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w800),
-                            ),
-                            SizedBox(
-                              height: 5,
-                            ),
-                            timeSlotWidget("13", "May", "Consultation",
-                                "Sunday 9 am to 1.30 am"),
-                            timeSlotWidget("14", "May", "Consultation",
-                                "Monday 10 am to 1.30 am"),
-                            timeSlotWidget("1", "June", "Consultation",
-                                "Wednesday 9 am to 1.30 am"),
-                            timeSlotWidget("3", "June", "Consultation",
-                                "Friday 10 am to 1.30 am"),
+                            SizedBox(height: 20,),
+                          Text("Your Contact Information",style: TextStyle(fontSize: 20,fontWeight:FontWeight.w800),),
+                          SizedBox(height: 10,),
+                          Text(
+                            "Email : ${DoctorService.currentDoctor!.email}",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w400),
+                          ),
+                          SizedBox(height: 6,),
+                          Text(
+                            "Phone : ${DoctorService.currentDoctor!.phone}",
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w400),
+                          ),
+                          SizedBox(height: 50,),
                             Center(
                               child: ElevatedButton(
                                 child: Text(
                                   'SIGN OUT',
                                   style: TextStyle(
                                     fontSize: 18,
+                                    fontWeight: FontWeight.bold
                                   ),
                                 ),
                                 onPressed: () {
@@ -146,6 +131,9 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                                     }
                                   );
                                 },
+                                style: ElevatedButton.styleFrom(
+                                  primary: Color(0xffff5757),
+                                ),
                               ),
                             )
                           ],
@@ -154,75 +142,6 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
                     ],
                   ),
                 ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Container timeSlotWidget(
-      String date, String month, String slotType, String time) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 10),
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-          color: docContentBgColor),
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              width: 70,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                color: dateBgColor,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "$date",
-                    style: TextStyle(
-                      color: dateColor,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                  Text(
-                    "$month",
-                    style: TextStyle(
-                        color: dateColor,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "$slotType",
-                    style: TextStyle(
-                        color: dateColor,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800),
-                  ),
-                  Text(
-                    "$time",
-                    style: TextStyle(
-                        color: dateColor,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ],
               ),
             ),
           ],

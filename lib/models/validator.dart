@@ -8,7 +8,19 @@ class Validator {
       return 'E-mail is required';
     }
     if (!regex.hasMatch(value)) {
-      return 'Enter a valid email address';
+      return 'Invalid email address';
+    }
+  }
+
+  static String? validatePhone(String? value) {
+    String pattern =  r'(^(?:[+0]9)?[0-9]{10,12}$)';
+    RegExp regex = RegExp(pattern);
+
+    if (value == '' || value == null) {
+      return 'Phone number is required';
+    }
+    if (!regex.hasMatch(value)) {
+      return 'Invalid phone number';
     }
   }
 
@@ -34,7 +46,7 @@ class Validator {
       return 'Name is required';
     }
     if (!regex.hasMatch(value)) {
-      return 'Enter a valid name';
+      return 'Invalid name';
     }
   }
   
