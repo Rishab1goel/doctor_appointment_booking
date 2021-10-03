@@ -1,14 +1,22 @@
 import 'package:doctorappointmentbookingapp/colorScheme.dart';
+import 'package:doctorappointmentbookingapp/models/doctor.dart';
+import 'package:doctorappointmentbookingapp/screens/get_started_screen.dart';
 import 'package:flutter/material.dart';
-import 'get_started_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DoctorInfoScreen extends StatefulWidget {
   static const String title = 'doctorInfoScreen';
+  final Doctor doctor;
+
+  const DoctorInfoScreen({Key? key,required this.doctor}) : super(key: key);
+  
   @override
   _DoctorInfoScreenState createState() => _DoctorInfoScreenState();
 }
 
 class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,12 +67,25 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
                             width: 100,
                             child: Image.asset('assets/doc1.png'),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("Dr Susan Thomas",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w400),),
-                              Text("Heart Surgeon -CK Hospital",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w400),),
-                            ],
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "Dr. ${widget.doctor.name}",
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                                Text(
+                                  "${widget.doctor.specialization}",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w400),
+                                  ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -73,31 +94,18 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
                         child:Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text("About the doctor",style: TextStyle(fontSize: 18,fontWeight:FontWeight.w800),),
+                          SizedBox(height: 20,),
+                          Text("About the doctor",style: TextStyle(fontSize: 20,fontWeight:FontWeight.w800),),
                           SizedBox(height: 10,),
-                          Text("Please write about the description of the doctor here.This will be a detailed information about the doctor and the roles and achievements that the doctor has had over the past years",
-                          style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400),),
-                          SizedBox(height: 10,),
-                          Text("Available time slots",style: TextStyle(fontSize: 18,fontWeight: FontWeight.w800),),
+                          Text("${widget.doctor.description}",
+                          style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400),),
+                          SizedBox(height: 24,),
+                          Text("Available time slots",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w800),),
                           SizedBox(height: 5,),
                           timeSlotWidget("13","May","Consultation","Sunday 9 am to 1.30 am"),
                           timeSlotWidget("14","May","Consultation","Monday 10 am to 1.30 am"),
                           timeSlotWidget("1","June","Consultation","Wednesday 9 am to 1.30 am"),
                           timeSlotWidget("3","June","Consultation","Friday 10 am to 1.30 am"),
-
-                          Center(
-                            child: ElevatedButton(
-                              child: Text(
-                                'SIGN OUT',
-                                style: TextStyle(fontSize: 18,),
-
-                              ),
-                              onPressed: () {
-                                Navigator.pushNamed(context, GetStartedScreen.title);
-                                //signup screen
-                              },
-                            ),
-                          )
                         ],
 
                        ),
@@ -146,14 +154,16 @@ class _DoctorInfoScreenState extends State<DoctorInfoScreen> {
               ),
             ),
             SizedBox(width: 10,),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("$slotType",style: TextStyle(color: dateColor,fontSize: 20,fontWeight: FontWeight.w800),),
-                Text("$time",style: TextStyle(color: dateColor,fontSize: 17,fontWeight: FontWeight.w600),),
-
-              ],
-
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("$slotType",style: TextStyle(color: dateColor,fontSize: 20,fontWeight: FontWeight.w800),),
+                  Text("$time",style: TextStyle(color: dateColor,fontSize: 17,fontWeight: FontWeight.w600),),
+            
+                ],
+            
+              ),
             ),
           ],
         ),

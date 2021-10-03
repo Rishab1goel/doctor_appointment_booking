@@ -1,7 +1,14 @@
-import 'package:doctorappointmentbookingapp/colorScheme.dart';
-import 'package:doctorappointmentbookingapp/screens/doctor_info_screen.dart';
-import 'package:flutter/material.dart';
+import 'dart:developer';
 
+import 'package:doctorappointmentbookingapp/colorScheme.dart';
+import 'package:doctorappointmentbookingapp/models/doctor.dart';
+import 'package:doctorappointmentbookingapp/screens/doctor_info_screen.dart';
+import 'package:doctorappointmentbookingapp/screens/doctor_profile_screen.dart';
+import 'package:doctorappointmentbookingapp/services/doctor_service.dart';
+import 'package:doctorappointmentbookingapp/services/network_connection_service.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String title = 'HomeScreen';
@@ -10,6 +17,31 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  var _databaseReference = FirebaseDatabase.instance.reference().child('doctors');
+  bool _isConnected = false;
+
+  @override
+  void initState() {
+    refresh();
+    setProfile();
+    super.initState();
+  }
+
+  Future setProfile() async{
+    if(_auth.currentUser!=null)
+      await DoctorService.setCurrentDoctor(uid: _auth.currentUser!.uid);
+  }
+
+  Future refresh() async {
+    log('Refreshing home in screen...');
+    _isConnected = await NetworkConnection.isConnected();
+    setState(() {
+      
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -28,29 +60,26 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: Colors.transparent,
               elevation: 0,
               leading: Image.asset('assets/icons/app_icon.png'),
+              title: Text('Doctor +',
+                style: TextStyle(
+                  color: Color(0xff353538),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               actions: [
-                Container(
-                  height: 115,
-                  width: 115,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                        colors: [getStartedColorStart, getStartedColorEnd],
-                        stops: [0, 1]),
-                  ),
-                  child: GestureDetector(
+                if(_auth.currentUser!=null)
+                  GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, DoctorInfoScreen.title);
+                      Navigator.pushNamed(context, DoctorProfileScreen.title);
                     },
-                    child: Container(
-                      child: Center(
-                        child: Image.asset('assets/doc1.png',fit: BoxFit.cover,),
-
+                    child: Center(
+                      child: Image.asset(
+                        'assets/doc1.png',
+                        fit: BoxFit.fill,
                       ),
+
                     ),
                   ),
-
-                ),
 
               ],
             ),
@@ -86,8 +115,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
+                  // ElevatedButton(
+                  //   onPressed: () async {
+                  //     await DoctorService.fetchDoctors();
+                  //   },
+                  //   child: Text('Read'),
+                  // ),
+
                   Text(
-                    "Chief Doctors",
+                    "All Doctors",
                     style: TextStyle(
                         fontSize: 25, fontWeight: FontWeight.w800),
                   ),
@@ -95,17 +131,43 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 20,
                   ),
                   Expanded(
-                    child: ListView(
-                      children: [
-                        createDocWidget("doc1.png", "Susan Thomas"),
-                        createDocWidget("doc2.png", "paul Barbara"),
-                        createDocWidget("doc3.png", "Nancy Williams"),
-                        createDocWidget("doc1.png", "Jacob jonas"),
-                        createDocWidget("doc2.png", "Santo Riga"),
-                        createDocWidget("doc3.png", "Willy Thomas"),
-                      ],
-                    ),
-                  ),
+                    child: RefreshIndicator(
+                        onRefresh: ()async{
+                          await refresh();
+                        },
+                        child: 
+                        _isConnected ?
+                          StreamBuilder<List<Doctor>?>(
+                            stream: DoctorService.fetchDoctors(),
+                            builder: (context, snapshot) {
+                              List<Doctor>? allDoctors =  snapshot.data;
+                              return snapshot.hasError 
+                              ? Center(child: Text('Something went wrong'),)
+                              : snapshot.hasData 
+                                ? ListView.builder(
+                                    itemCount: allDoctors!.length,
+                                    itemBuilder: (context,index){
+                                      return createDoctorWidget(
+                                        imgName: "doc${(index)%3 +1}.png",
+                                        doctor: allDoctors[index],                                
+                                      );
+                                    }
+                                  )
+                                : Center(child: CircularProgressIndicator() );
+                            }
+                          )
+                          : Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text('No network'),
+                                ElevatedButton(onPressed: ()async{refresh();}, 
+                                  child: Text('Refresh'))
+                              ],
+                            ),
+                          ),
+                      )
+                    )                      
                 ],
               ),
             ),
@@ -130,7 +192,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Container createDocWidget(String imgName, String docName) {
+  Container createDoctorWidget({
+    required String imgName, 
+    required Doctor doctor
+    }) {
     return Container(
       child: InkWell(
         child: Container(
@@ -142,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Container(
             padding: EdgeInsets.all(7),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   width: 70,
@@ -158,24 +223,28 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 10,
                 ),
                 Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Dr. $docName",
-                        style:
-                            TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "A brief about the doctor to be added here,this is more like an introduction",
-                        style: TextStyle(
-                            fontSize: 12, fontWeight: FontWeight.w400),
-                        overflow: TextOverflow.clip,
-                      )
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "Dr. ${doctor.name}",
+                          style:
+                              TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "${doctor.specialization??''}",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.w400),
+                          overflow: TextOverflow.clip,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -183,7 +252,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         onTap: () {
-          Navigator.pushNamed(context, DoctorInfoScreen.title);
+          Navigator.push(
+            context, MaterialPageRoute(builder: (context)=> DoctorInfoScreen(doctor: doctor,))
+          );
         },
       ),
     );
@@ -213,3 +284,29 @@ class pathPainter extends CustomPainter {
     return true;
   }
 }
+
+
+// child: StreamBuilder(
+                      //     stream: _databaseReference.onChildChanged,
+                      //     builder: (context, snap) {
+                      //       // List<Doctor>? allDoctors =  snapshot.data;
+ 
+                      //       final data = snap.data;
+                      //       print(data);
+                      //       // return snapshot.hasError 
+                      //       // ?
+                      //       //   Center(child: Text('Something went wrong'),)
+                      //       // : snapshot.hasData 
+                      //       //   ? ListView.builder(
+                      //       //       itemCount: allDoctors!.length,
+                      //       //       itemBuilder: (context,index){
+                      //       //         return createDoctorWidget(
+                      //       //           imgName: "doc${(index)%3 +1}.png",
+                      //       //           doctor: allDoctors[index],                                
+                      //       //         );
+                      //       //       }
+                      //       //     )
+                      //       //   : Center(child: CircularProgressIndicator() );
+                      //       return Text('hello ');
+                      //     }
+                      //   ),
